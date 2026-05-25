@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --choc-900: #1A0800;
+  --choc-800: #3D1A00;
+  --choc-700: #6B2F0A;
+  --choc-500: #8B4513;
+  --choc-300: #C4855A;
+  --pink-900: #7D2B4A;
+  --pink-700: #C45B7E;
+  --pink-500: #E8819D;
+  --pink-300: #F2A8C0;
+  --pink-100: #FBEAF2;
+  --gold-700: #8B6914;
+  --gold-500: #C9A84C;
+  --gold-300: #E8CC7A;
+  --gold-100: #FAF3DC;
+  --cream: #FDF6EE;
+  --cream-dark: #F5E8D4;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--choc-900);
+}
+
+button, a, input, textarea, select {
+  outline-color: transparent;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  box-shadow: 0 0 0 3px rgba(232,129,157,0.18);
+}
+
+.container-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.brand-card {
+  background: #fff;
+  border: 1px solid rgba(200,160,120,0.25);
+  border-radius: 16px;
+}
+
+.pill {
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.pill:hover { transform: translateY(-1px); }
+
+@keyframes cookie-wobble {
+  0%, 100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.04); }
+}
+
+@keyframes bite {
+  0%, 100% { clip-path: circle(50% at 50% 50%); }
+  50% { clip-path: polygon(0 0, 78% 0, 67% 20%, 82% 36%, 65% 51%, 78% 69%, 62% 100%, 0 100%); }
+}
+
+.cookie-wobble { animation: cookie-wobble 3s ease-in-out infinite; }
+.cookie-bite { animation: bite 1.5s ease-in-out infinite; }
+
+@media (max-width: 767px) {
+  body { padding-bottom: 76px; }
+}
