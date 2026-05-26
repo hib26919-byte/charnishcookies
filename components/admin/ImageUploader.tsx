@@ -4,6 +4,7 @@ import { Upload } from 'lucide-react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { CookieLoader } from '@/components/ui/CookieLoader';
+import { compressImageTo500KB } from '@/lib/image-compress';
 
 export function ImageUploader({ onChange }: { onChange?: (value: string) => void }) {
   const [uploading, setUploading] = useState(false);
@@ -11,13 +12,14 @@ export function ImageUploader({ onChange }: { onChange?: (value: string) => void
   async function upload(file: File) {
     setUploading(true);
     try {
+      const compressed = await compressImageTo500KB(file);
       const form = new FormData();
-      form.append('image', file);
+      form.append('image', compressed);
       const response = await fetch('/api/upload-image', { method: 'POST', body: form });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? 'Upload failed');
       onChange?.(data.url);
-      toast.success('Image uploaded');
+      toast.success(`Image uploaded (${Math.round(compressed.size / 1024)}KB)`);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Image upload failed');
     } finally {

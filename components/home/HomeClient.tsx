@@ -5,6 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import { collection, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { FestivalBannerModal } from '@/components/home/FestivalBannerModal';
+import { FamilyBrandSection } from '@/components/home/FamilyBrandSection';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { HeroSlider } from '@/components/home/HeroSlider';
 import { Testimonials } from '@/components/home/Testimonials';
@@ -51,6 +52,7 @@ export function HomeClient() {
     <>
       <FestivalBannerModal banners={banners} />
       <HeroSlider content={content} />
+      <FamilyBrandSection />
       <FeaturedProducts products={products.filter((product) => product.featured)} />
       <WhyUs />
       <Testimonials reviews={sampleReviews} />

@@ -1,17 +1,23 @@
 import { NextResponse } from 'next/server';
 import { uploadBase64ToImgBB } from '@/lib/imgbb';
 
+const MAX_IMAGE_BYTES = 500 * 1024;
+
 export async function POST(request: Request) {
   try {
     const form = await request.formData();
     const image = form.get('image');
     if (typeof image === 'string' && image.startsWith('data:image')) {
+      const approxBytes = Math.ceil((image.length * 3) / 4);
+      if (approxBytes > MAX_IMAGE_BYTES) {
+        return NextResponse.json({ error: 'Image must be compressed below 500KB' }, { status: 400 });
+      }
       const url = await uploadBase64ToImgBB(image);
       return NextResponse.json({ url });
     }
     if (image instanceof File) {
-      if (image.size > 10 * 1024 * 1024) {
-        return NextResponse.json({ error: 'Image must be 10MB or smaller' }, { status: 400 });
+      if (image.size > MAX_IMAGE_BYTES) {
+        return NextResponse.json({ error: 'Image must be compressed below 500KB' }, { status: 400 });
       }
       const bytes = Buffer.from(await image.arrayBuffer());
       const base64 = `data:${image.type};base64,${bytes.toString('base64')}`;
