@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div>
           <span className="pill bg-white px-4 py-2 text-sm text-gold-700">Blessings</span>
           <h2 className="mt-4 font-heading text-3xl font-bold text-choc-800">Nidanampati Sri Lakshmi</h2>
-          <p className="mt-3 text-choc-500">Replace this image in `public/god-nidanampati-sri-lakshmi.png` with your preferred photo.</p>
+          <p className="mt-3 text-choc-500">With gratitude and blessings, every Charnish Cookies box is prepared with care, warmth, and a wish for sweetness in every home.</p>
         </div>
       </section>
       <section className="mt-16 grid gap-4 rounded-2xl bg-white p-6 text-center md:grid-cols-3">

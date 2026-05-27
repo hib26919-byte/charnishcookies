@@ -2,14 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bot, Home, Phone, ShoppingBag, ShoppingCart } from 'lucide-react';
+import { Home, Info, Phone, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/hooks/useCart';
 
 const tabs = [
   { label: 'Home', href: '/', icon: Home },
   { label: 'Shop', href: '/shop', icon: ShoppingBag },
-  { label: 'Chat', href: '#chat', icon: Bot },
+  { label: 'About', href: '/about', icon: Info },
   { label: 'Contact', href: '/contact', icon: Phone },
   { label: 'Cart', href: '/checkout', icon: ShoppingCart }
 ];

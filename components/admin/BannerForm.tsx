@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { addDoc, collection, doc, serverTimestamp, Timestamp, updateDoc } from 'firebase/firestore';
+import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/Button';
 import { ImageUploader } from '@/components/admin/ImageUploader';
@@ -46,7 +47,8 @@ export function BannerForm({ banner, onSaved, onCancel }: { banner?: Banner | nu
         ...form,
         image,
         startDate: Timestamp.fromDate(new Date(form.startDate)),
-        endDate: Timestamp.fromDate(new Date(form.endDate))
+        endDate: Timestamp.fromDate(new Date(form.endDate)),
+        updatedAt: serverTimestamp()
       };
       if (banner?.id) {
         await updateDoc(doc(db, 'banners', banner.id), payload);
@@ -75,7 +77,14 @@ export function BannerForm({ banner, onSaved, onCancel }: { banner?: Banner | nu
       <input type="datetime-local" value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })} className="h-11 rounded-xl border border-choc-300/30 px-4" />
       <input type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} className="h-11 rounded-xl border border-choc-300/30 px-4" />
       <ImageUploader onChange={setImage} />
-      {image && <p className="text-sm font-bold text-choc-700">Image uploaded</p>}
+      {image && (
+        <div className="overflow-hidden rounded-2xl border border-gold-300 bg-cream-dark">
+          <div className="relative aspect-video">
+            <Image src={image} alt="Festival banner preview" fill className="object-cover" />
+          </div>
+          <p className="p-3 text-sm font-bold text-choc-700">Image uploaded and ready to save</p>
+        </div>
+      )}
       <label className="font-bold text-choc-800"><input type="checkbox" checked={form.active} onChange={(e) => setForm({ ...form, active: e.target.checked })} /> Active</label>
       <p className="text-sm text-choc-500">Banner will automatically show or hide based on start and end dates. It appears once per user session.</p>
       <Button loading={loading}>Save Banner</Button>

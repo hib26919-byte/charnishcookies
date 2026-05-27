@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { CouponInput } from '@/components/checkout/CouponInput';
 import { PaymentSection } from '@/components/checkout/PaymentSection';
@@ -61,12 +62,24 @@ export function OrderForm() {
           <h1 className="font-heading text-3xl font-bold text-choc-800">Checkout</h1>
           <div className="mt-5 space-y-3">
             {cart.items.map((item) => (
-              <div key={item.productId} className="flex items-center justify-between gap-3 border-b border-choc-300/20 pb-3">
-                <div>
+              <div key={item.productId} className="flex flex-wrap items-center justify-between gap-3 border-b border-choc-300/20 pb-3">
+                <div className="min-w-[180px] flex-1">
                   <p className="font-bold text-choc-800">{item.name}</p>
                   <p className="text-sm text-choc-500">Qty {item.quantity}</p>
                 </div>
-                <strong className="text-choc-700">{formatCurrency(item.price * item.quantity)}</strong>
+                <div className="flex items-center gap-2">
+                  <button className="grid h-9 w-9 place-items-center rounded-full bg-gold-100 text-choc-700" onClick={() => cart.update(item.productId, item.quantity - 1)} aria-label="Decrease quantity">
+                    <Minus size={15} />
+                  </button>
+                  <span className="w-8 text-center font-bold text-choc-800">{item.quantity}</span>
+                  <button className="grid h-9 w-9 place-items-center rounded-full bg-gold-100 text-choc-700" onClick={() => cart.update(item.productId, item.quantity + 1)} aria-label="Increase quantity">
+                    <Plus size={15} />
+                  </button>
+                  <button className="grid h-9 w-9 place-items-center rounded-full bg-red-50 text-red-700" onClick={() => cart.remove(item.productId)} aria-label="Remove item">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+                <strong className="min-w-24 text-right text-choc-700">{formatCurrency(item.price * item.quantity)}</strong>
               </div>
             ))}
             {!cart.items.length && <p className="text-choc-500">Your cart is empty. Add cookies from the shop to place an order.</p>}

@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 90" role="img" aria-label="Paytm">
-  <rect width="260" height="90" rx="24" fill="#ffffff"/>
-  <rect x="8" y="8" width="244" height="74" rx="20" fill="#eefaff" stroke="#bcecff" stroke-width="3"/>
-  <text x="34" y="56" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="900" fill="#002970">Pay</text>
-  <text x="111" y="56" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="900" fill="#00baf2">tm</text>
-  <path d="M190 25h34a10 10 0 0 1 10 10v20a10 10 0 0 1-10 10h-34z" fill="#00baf2" opacity=".2"/>
-</svg>
