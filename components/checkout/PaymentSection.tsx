@@ -1,7 +1,6 @@
 'use client';
 
 import { QRCodeSVG } from 'qrcode.react';
-import { Button } from '@/components/ui/Button';
 import { businessInfo } from '@/lib/constants';
 import { formatCurrency, upiUrl } from '@/lib/utils';
 
@@ -51,19 +50,20 @@ export function PaymentSection({ total, method, setMethod }: { total: number; me
               ['PhonePe', 'PhonePe'],
               ['GooglePay', 'Google Pay'],
               ['Paytm', 'Paytm']
-            ].map(([key, name]) => (
-              <div key={key} className="flex items-center gap-2 rounded-full border border-choc-300/20 bg-white py-2 pl-2 pr-4 shadow-sm">
+            ].map(([key, name]) => {
+              const active = method === key;
+              return (
+              <a
+                key={key}
+                href={value}
+                onClick={() => setMethod(key as 'PhonePe' | 'GooglePay' | 'Paytm')}
+                className={`flex items-center gap-2 rounded-full border py-2 pl-2 pr-4 shadow-sm transition hover:-translate-y-0.5 ${active ? 'border-pink-500 bg-pink-100 ring-2 ring-pink-300/50' : 'border-choc-300/20 bg-white'}`}
+              >
                 <PaymentLogo app={name as 'PhonePe' | 'Google Pay' | 'Paytm'} />
                 <span className="text-xs font-black text-choc-700">{name}</span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 flex flex-wrap gap-3">
-            {(['PhonePe', 'GooglePay', 'Paytm'] as const).map((app) => (
-              <a key={app} href={value} onClick={() => setMethod(app)}>
-                <Button variant={method === app ? 'pink' : 'secondary'}>{app}</Button>
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
