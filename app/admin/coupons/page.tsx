@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useEffect, useState } from 'react';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, Timestamp, updateDoc } from 'firebase/firestore';
 import toast from 'react-hot-toast';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/Button';
@@ -31,23 +31,20 @@ export default function AdminCouponsPage() {
         minOrder: Number(form.get('minOrder')),
         maxUses: Number(form.get('maxUses')),
         usedCount: editing?.usedCount ?? 0,
-        expiresAt: new Date(String(form.get('expiresAt'))).toISOString(),
+        expiresAt: Timestamp.fromDate(new Date(String(form.get('expiresAt')))),
         active: form.get('active') === 'on'
       };
-      const response = await fetch('/api/coupons', {
-        method: 'PUT',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ id: editing?.id, ...payload })
-      });
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error ?? 'Coupon save failed');
+      if (editing?.id) {
+        await updateDoc(doc(db, 'coupons', editing.id), { ...payload, updatedAt: serverTimestamp() });
+      } else {
+        await addDoc(collection(db, 'coupons'), { ...payload, createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
       }
       event.currentTarget.reset();
       setEditing(null);
       toast.success(editing?.id ? 'Coupon updated' : 'Coupon saved');
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Could not save coupon.');
+      console.error('Coupon save error:', error);
+      toast.error('Could not save coupon. Confirm you are logged in as cookies@gmail.com and rules are published.');
     } finally {
       setLoading(false);
     }
@@ -56,16 +53,11 @@ export default function AdminCouponsPage() {
   async function remove(id: string) {
     if (!window.confirm('Delete this coupon?')) return;
     try {
-      const response = await fetch('/api/coupons', {
-        method: 'DELETE',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ id })
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error ?? 'Coupon delete failed');
+      await deleteDoc(doc(db, 'coupons', id));
       toast.success('Coupon deleted');
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Could not delete coupon');
+      console.error('Coupon delete error:', error);
+      toast.error('Could not delete coupon. Confirm admin login/rules.');
     }
   }
 

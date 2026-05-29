@@ -7,6 +7,7 @@ import { Order } from '@/types';
 import { formatCurrency } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+import { buildReceipt, buildReceipts } from '@/lib/pdf';
 
 const PAYMENT_COLORS: Record<string, string> = {
   pending:  'bg-amber-100 text-amber-800',
@@ -82,6 +83,18 @@ export function OrderTable() {
     }
   }
 
+  function downloadReceipt(order: Order) {
+    buildReceipt(order).save(`${order.orderNumber || 'charnish-order'}-receipt.pdf`);
+  }
+
+  function downloadAllReceipts() {
+    if (!orders.length) {
+      toast.error('No orders to download');
+      return;
+    }
+    buildReceipts(orders).save(`charnish-all-receipts-${new Date().toISOString().slice(0, 10)}.pdf`);
+  }
+
   if (loading) {
     return (
       <div className="brand-card p-5">
@@ -109,6 +122,9 @@ export function OrderTable() {
         <h2 className="font-heading text-lg font-bold text-choc-800">
           All Orders <span className="ml-2 text-sm font-normal text-choc-500">({orders.length})</span>
         </h2>
+        <Button variant="gold" className="h-9 px-4 text-xs" onClick={downloadAllReceipts}>
+          Download All Receipts
+        </Button>
       </div>
       <table className="w-full min-w-[860px] text-left text-sm">
         <thead className="text-choc-800">
@@ -149,6 +165,9 @@ export function OrderTable() {
                       View Screenshot
                     </Button>
                   )}
+                  <Button variant="gold" className="h-7 px-2 text-xs" onClick={() => downloadReceipt(order)}>
+                    Receipt
+                  </Button>
                   {order.paymentStatus === 'pending' && (
                     <>
                       <Button

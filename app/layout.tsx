@@ -8,6 +8,7 @@ import { MobileNav } from '@/components/layout/MobileNav';
 import { Footer } from '@/components/layout/Footer';
 import { ChatWidget } from '@/components/chatbot/ChatWidget';
 import { FloatingActions } from '@/components/layout/FloatingActions';
+import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -95,8 +96,10 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
+    icon: [
+      { url: '/logo.png', type: 'image/png', sizes: '512x512' },
+    ],
+    shortcut: '/logo.png',
     apple: '/logo.png',
   },
 
@@ -167,6 +170,7 @@ export default function RootLayout({
         />
 
         <Providers>
+          <AnnouncementBar />
           <Navbar />
 
           <main>{children}</main>
