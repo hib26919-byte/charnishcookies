@@ -77,8 +77,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/logo.png',
-        width: 1200,
-        height: 630,
+        width: 512,
+        height: 512,
         alt: 'Charnish Cookies Logo',
       },
     ],
@@ -96,10 +96,8 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: [
-      { url: '/logo.png', type: 'image/png', sizes: '512x512' },
-    ],
-    shortcut: '/logo.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
     apple: '/logo.png',
   },
 
@@ -121,7 +119,7 @@ export default function RootLayout({
       className={`${inter.variable} ${playfair.variable}`}
     >
       <body className="font-sans bg-white text-black">
-        
+
         {/* SEO Structured Data */}
         <script
           type="application/ld+json"
@@ -129,7 +127,7 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
 
-              '@type': 'Bakery',
+              '@type': ['Organization', 'Bakery'],
 
               name: 'Charnish Cookies',
 
@@ -171,6 +169,7 @@ export default function RootLayout({
 
         <Providers>
           <AnnouncementBar />
+
           <Navbar />
 
           <main>{children}</main>
