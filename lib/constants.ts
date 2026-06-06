@@ -1,6 +1,6 @@
 export const businessInfo = {
   name: 'Charnish Cookies',
-  founder: 'Atmakuri Lalitha',
+  founder: 'Lalitha & Ashok',
   address: 'Singasandra, Bangalore, Karnataka, India',
   phone1: '7676818313',
   phone2: '8978169099',
