@@ -91,8 +91,8 @@ export default function AboutPage() {
           </blockquote>
         </article>
 
-        <div className="group relative aspect-[4/5] min-h-[420px] overflow-hidden rounded-2xl bg-cream-dark shadow-[0_18px_60px_rgba(107,62,38,0.16)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_72px_rgba(107,62,38,0.22)]">
-          <Image src="/founder-photo.png" alt="Charnish Cookies founder photo" fill className="object-cover transition duration-500 group-hover:scale-105" />
+        <div className="group relative aspect-square overflow-hidden rounded-2xl bg-cream-dark shadow-[0_18px_60px_rgba(107,62,38,0.16)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_72px_rgba(107,62,38,0.22)]">
+          <Image src="/founder-photo.png" alt="Charnish Cookies founder photo" fill sizes="(min-width: 1024px) 528px, calc(100vw - 32px)" className="object-cover transition duration-500 group-hover:scale-105" />
           <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-green-200 bg-white/95 px-4 py-2 text-sm font-bold text-green-700 shadow-[0_10px_30px_rgba(26,8,0,0.18)] backdrop-blur">
             <span aria-hidden="true">&#9989;</span>
             FSSAI Verified
